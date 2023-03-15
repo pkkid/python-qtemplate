@@ -1,2 +1,2 @@
-# python-qtemplate
-Simpler QT template language for PySide6
+# Python QTemplate
+Simple but powerful QT template language for PySide6.
