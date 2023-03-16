@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+# python .\setup.py sdist
+# twine upload --repository pypi dist/*
 from qtemplate import VERSION
 from pkg_resources import parse_requirements
 from setuptools import setup
@@ -9,7 +11,7 @@ with open('requirements.txt') as handle:
     requirements = [str(req) for req in parse_requirements(handle)]
 
 setup(
-    name='qtemplate',
+    name='qt-qtemplate',
     version=VERSION,
     description='Simple but powerful QT template language for PySide6.',
     author='Michael Shepanski',
