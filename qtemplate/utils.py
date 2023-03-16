@@ -47,6 +47,18 @@ def rget(obj, attrstr, default=None, delim='.'):
         return default
 
 
+def rset(obj, attrstr, value, delim='.'):
+    """ Recursively set a value to a nested dictionary. """
+    parts = attrstr.split(delim, 1)
+    attr = parts[0]
+    attrstr = parts[1] if len(parts) == 2 else None
+    if attrstr and attr not in obj:
+        obj[attr] = Bunch() if isinstance(obj, Bunch) else {}
+    if attrstr:
+        return rset(obj[attr], attrstr, value)
+    obj[attr] = value
+
+
 def setStyleSheet(qobj, filepath, context=None, outline=False):
     """ Load the specified stylesheet via libsass and add it to qobj. """
     styles = open(filepath).read()

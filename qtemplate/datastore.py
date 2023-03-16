@@ -26,10 +26,11 @@ class DataStore(utils.Bunch):
             for sync in self._registry[token]:
                 value = sync.qtmpl._apply(sync.expr, sync.context, sync.callback)
     
-    def listValues(self, root, path=''):
+    def listValues(self, root=None, path=''):
         """ Retutns a flattened list containing (key, value, type) for
             all values in this DataStore.
         """
+        root = self if root is None else root
         if getattr(root, 'items', None) is None:
             return [(path, str(root), utils.typeStr(root))]
         values = []
