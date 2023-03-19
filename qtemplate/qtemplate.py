@@ -68,7 +68,7 @@ class QTemplateWidget(QtWidgets.QWidget):
         self.app = QtCore.QCoreApplication.instance()
         self.filepath = None            # Filepath of tmpl file (for relative imports)
         self.ids = utils.Bunch()        # Reference to QObject by id
-        self._loading = True            # Set False after initial objects loaded
+        self.loading = True            # Set False after initial objects loaded
         self._load()                    # Read the template string and convert to qobjects
 
     def __new__(cls, *args, **kwargs):
@@ -93,7 +93,7 @@ class QTemplateWidget(QtWidgets.QWidget):
             root = ElementTree.fromstring(self.TMPLSTR)
             self.filepath = abspath(__file__)
         self._walk(root, context=dict(self=self))
-        self._loading = False
+        self.loading = False
     
     def _walk(self, elem, parent=None, context=None, indent=0):
         """ Parse the specified element and it's children. """
@@ -276,7 +276,7 @@ class QTemplateWidget(QtWidgets.QWidget):
         try:
             fullcontext = utils.Bunch(**context, **self.globalcontext)
             result = eval(expr, fullcontext)
-            if self._loading:
+            if self.loading:
                 self._registerTokens(expr, context, callback)
             return result
         except Exception:
