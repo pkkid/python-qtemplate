@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sass
-from os.path import dirname, normpath
+from os.path import dirname, normpath, isabs
 from PySide6 import QtCore
 from qtemplate.base import QTemplateTag
 from string import Template
@@ -22,7 +22,9 @@ class StyleSheet(QTemplateTag):
 
     def setContext(self, context=None):
         context = context or {}
-        filepath = normpath(f'{dirname(self.qtmpl.filepath)}/{self.filepath}')
+        filepath = normpath(self.filepath)
+        if not isabs(filepath):
+            filepath = normpath(f'{dirname(self.qtmpl.filepath)}/{self.filepath}')
         context.update({'dir': dirname(filepath).replace('\\','/')})
         template = Template(open(filepath).read())
         styles = template.safe_substitute(context)

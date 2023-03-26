@@ -103,8 +103,6 @@ class QTemplateWidget(QtWidgets.QWidget):
         if self._tagSet(elem, parent, context, indent): return        # <set attr='value' />; no children
         if self._tagAdd(elem, parent, context, indent): return        # add<Tag>(attr=value); no children
         if self._tagConnect(elem, parent, context, indent): return    # <connect slot='callback' />; no children
-        print('----------')
-        print(self.globalcontext.keys())
         raise Exception(f'Unknown tag "{elem.tag}" in element {parent.__class__.__name__}.')
 
     def _tagQObject(self, elem, parent, context, indent):
